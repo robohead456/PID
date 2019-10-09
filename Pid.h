@@ -1,5 +1,5 @@
 /**
- * @file Pid.h
+ * @file PID.h
  * @brief Class for implementing discrete-time PID controllers
  * @author Dan Oates (WPI Class of 2020)
  * 
@@ -21,11 +21,11 @@
  */
 #pragma once
 
-class Pid
+class PID
 {
 public:
-	Pid(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl);
-	Pid();
+	PID(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl);
+	PID();
 	float update(float error, float ff = 0.0f);
 	void reset();
 private:

@@ -1,5 +1,5 @@
 /**
- * @file Pid.cpp
+ * @file PID.cpp
  * @author Dan Oates (WPI Class of 2020)
  */
 #include "Pid.h"
@@ -14,7 +14,7 @@
  * @param u_max Maximum response
  * @param f_ctrl Control frequency
  */
-Pid::Pid(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
+PID::PID(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
 {
 	this->f_ctrl = f_ctrl;
 	this->t_ctrl = 1.0f / f_ctrl;
@@ -36,7 +36,7 @@ Pid::Pid(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
  * 
  * Note: For array instantiation only
  */
-Pid::Pid() : Pid(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
+PID::PID() : Pid(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 {
 	return;
 }
@@ -46,7 +46,7 @@ Pid::Pid() : Pid(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
  * @param error Setpoint error
  * @param ff Feed-forward term (optional)
  */
-float Pid::update(float error, float ff)
+float PID::update(float error, float ff)
 {
 	up = clamp_limit(kp * error, u_min, u_max);
 	if(u_min < u && u < u_max)
@@ -71,7 +71,7 @@ float Pid::update(float error, float ff)
 /**
  * @brief Resets PID controller (zeros derivative and integral terms)
  */
-void Pid::reset()
+void PID::reset()
 {
 	u = 0.0f;
 	up = 0.0f;

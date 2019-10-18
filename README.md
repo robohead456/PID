@@ -15,6 +15,3 @@ All calculations are done in 32-bit floating-point.
 
 ### Dependencies
 - [CppUtil](https://github.com/doates625/CppUtil.git)
-
-### References
-- [PID Control](https://en.wikipedia.org/wiki/PID_controller)

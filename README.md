@@ -1,5 +1,5 @@
 # PID
-Class for discrete-time PID controllers
+Class for discrete-time PID controllers  
 Written by Dan Oates (WPI Class of 2020)
 
 ### Description

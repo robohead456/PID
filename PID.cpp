@@ -48,10 +48,10 @@ PID::PID() : Pid(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
  */
 float PID::update(float error, float ff)
 {
-	up = clamp_limit(kp * error, u_min, u_max);
+	up = Util::clamp(kp * error, u_min, u_max);
 	if(u_min < u && u < u_max)
 	{	
-		ui = clamp_limit(ui + ki * error, u_min, u_max);
+		ui = Util::clamp(ui + ki * error, u_min, u_max);
 	}
 	if(first_frame)
 	{
@@ -60,11 +60,11 @@ float PID::update(float error, float ff)
 	}
 	else
 	{
-		ud = clamp_limit(kd * (error - error_prev), u_min, u_max);
+		ud = Util::clamp(kd * (error - error_prev), u_min, u_max);
 	}
 	error_prev = error;
-	ff = clamp_limit(ff, u_min, u_max);
-	u = clamp_limit(up + ui + ud + ff, u_min, u_max);
+	ff = Util::clamp(ff, u_min, u_max);
+	u = Util::clamp(up + ui + ud + ff, u_min, u_max);
 	return u;
 }
 

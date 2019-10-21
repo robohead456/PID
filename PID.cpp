@@ -4,6 +4,7 @@
  */
 #include "Pid.h"
 #include <CppUtil.h>
+using CppUtil::clamp;
 
 /**
  * @brief Constructor for PID controller
@@ -48,10 +49,10 @@ PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
  */
 float PID::update(float error, float ff)
 {
-	up = Util::clamp(kp * error, u_min, u_max);
+	up = clamp(kp * error, u_min, u_max);
 	if(u_min < u && u < u_max)
 	{	
-		ui = Util::clamp(ui + ki * error, u_min, u_max);
+		ui = clamp(ui + ki * error, u_min, u_max);
 	}
 	if(first_frame)
 	{
@@ -60,11 +61,11 @@ float PID::update(float error, float ff)
 	}
 	else
 	{
-		ud = Util::clamp(kd * (error - error_prev), u_min, u_max);
+		ud = clamp(kd * (error - error_prev), u_min, u_max);
 	}
 	error_prev = error;
-	ff = Util::clamp(ff, u_min, u_max);
-	u = Util::clamp(up + ui + ud + ff, u_min, u_max);
+	ff = clamp(ff, u_min, u_max);
+	u = clamp(up + ui + ud + ff, u_min, u_max);
 	return u;
 }
 

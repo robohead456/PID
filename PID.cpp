@@ -2,7 +2,7 @@
  * @file PID.cpp
  * @author Dan Oates (WPI Class of 2020)
  */
-#include "Pid.h"
+#include "PID.h"
 #include <CppUtil.h>
 using CppUtil::clamp;
 

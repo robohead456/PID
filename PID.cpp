@@ -36,7 +36,7 @@ PID::PID(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
  * 
  * Note: For array instantiation only
  */
-PID::PID() : Pid(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
+PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 {
 	return;
 }

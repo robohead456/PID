@@ -19,17 +19,9 @@ PID::PID(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
 {
 	this->f_ctrl = f_ctrl;
 	this->t_ctrl = 1.0f / f_ctrl;
-	this->kp = kp;
-	this->ki = ki * t_ctrl;
-	this->kd = kd * f_ctrl;
-	this->u_min = u_min;
-	this->u_max = u_max;
-	this->u = 0.0f;
-	this->up = 0.0f;
-	this->ui = 0.0f;
-	this->ud = 0.0f;
-	this->error_prev = 0.0f;
-	this->first_frame = true;
+	set_gains(kp, ki, kd);
+	set_limits(u_min, u_max);
+	reset();
 }
 
 /**
@@ -40,6 +32,19 @@ PID::PID(float kp, float ki, float kd, float u_min, float u_max, float f_ctrl)
 PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 {
 	return;
+}
+
+/**
+ * @brief Updates PID gains
+ * @param kp Proportional gain
+ * @param ki Integral gain
+ * @param kd Derivative gain
+ */
+void PID::set_gains(float kp, float ki, float kd)
+{
+	this->kp = kp;
+	this->ki = ki * t_ctrl;
+	this->kd = kd * f_ctrl;
 }
 
 /**
@@ -89,5 +94,6 @@ void PID::reset()
 	up = 0.0f;
 	ui = 0.0f;
 	ud = 0.0f;
+	error_prev = 0.0f;
 	first_frame = true;
 }

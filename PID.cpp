@@ -43,6 +43,17 @@ PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
 }
 
 /**
+ * @brief Updates response limits
+ * @param u_min Minimum response
+ * @param u_max Maximum response
+ */
+void PID::set_limits(float u_min, float u_max)
+{
+	this->u_min = u_min;
+	this->u_max = u_max;
+}
+
+/**
  * @brief Calculates response to given error
  * @param error Setpoint error
  * @param ff Feed-forward term (optional)

@@ -42,8 +42,35 @@ PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
  */
 void PID::set_gains(float kp, float ki, float kd)
 {
+	set_kp(kp);
+	set_ki(ki);
+	set_kd(kd);
+}
+
+/**
+ * @brief Updates P-gain
+ * @param kp Proportional gain
+ */
+void PID::set_kp(float kp)
+{
 	this->kp = kp;
+}
+
+/**
+ * @brief Updates I-gain
+ * @param kp Integral gain
+ */
+void PID::set_ki(float ki)
+{
 	this->ki = ki * t_ctrl;
+}
+
+/**
+ * @brief Updates D-gain
+ * @param kp Derivative gain
+ */
+void PID::set_kd(float kd)
+{
 	this->kd = kd * f_ctrl;
 }
 
@@ -54,7 +81,25 @@ void PID::set_gains(float kp, float ki, float kd)
  */
 void PID::set_limits(float u_min, float u_max)
 {
+	set_u_max(u_max);
+	set_u_min(u_min);
+}
+
+/**
+ * @brief Updates minimum response
+ * @param u_min Minimum response
+ */
+void PID::set_u_min(float u_min)
+{
 	this->u_min = u_min;
+}
+
+/**
+ * @brief Updates maximum response
+ * @param u_max Maximum response
+ */
+void PID::set_u_max(float u_max)
+{
 	this->u_max = u_max;
 }
 

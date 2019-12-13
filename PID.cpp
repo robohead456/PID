@@ -111,11 +111,11 @@ void PID::set_u_max(float u_max)
 float PID::update(float error, float ff)
 {
 	up = clamp(kp * error, u_min, u_max);
-	if(u_min < u && u < u_max)
-	{	
+	if ((error > 0.0f && u < u_max) || (error < 0.0f && u > u_min))
+	{
 		ui = clamp(ui + ki * error, u_min, u_max);
 	}
-	if(first_frame)
+	if (first_frame)
 	{
 		ud = 0.0f;
 		first_frame = false;

@@ -17,7 +17,7 @@ public:
 	void set_limits(float u_min, float u_max);
 	void set_u_min(float u_min);
 	void set_u_max(float u_max);
-	float update(float error, float ff = 0.0f);
+	float update(float error, float ff = 0.0f, bool sat = false);
 	void reset();
 private:
 	float kp, ki, kd, u_min, u_max, f_ctrl, t_ctrl;

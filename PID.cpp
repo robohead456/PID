@@ -107,14 +107,22 @@ void PID::set_u_max(float u_max)
  * @brief Calculates response to given error
  * @param error Setpoint error
  * @param ff Feed-forward term (optional)
+ * @param sat = Saturation flag (optional)
  */
-float PID::update(float error, float ff)
+float PID::update(float error, float ff, bool sat)
 {
+	// P-control
 	up = clamp(kp * error, u_min, u_max);
-	if ((error > 0.0f && u < u_max) || (error < 0.0f && u > u_min))
+
+	// I-control
+	bool int_pos = (error > 0.0f && u < u_max);
+	bool int_neg = (error < 0.0f && u > u_min);
+	if ((int_pos || int_neg) && !sat)
 	{
 		ui = clamp(ui + ki * error, u_min, u_max);
 	}
+
+	// D-control
 	if (first_frame)
 	{
 		ud = 0.0f;
@@ -122,10 +130,15 @@ float PID::update(float error, float ff)
 	}
 	else
 	{
-		ud = clamp(kd * (error - error_prev), u_min, u_max);
+		float error_diff = error - error_prev;
+		ud = clamp(kd * error_diff, u_min, u_max);
 	}
 	error_prev = error;
+
+	// Feed-forward
 	ff = clamp(ff, u_min, u_max);
+
+	// Combine
 	u = clamp(up + ui + ud + ff, u_min, u_max);
 	return u;
 }

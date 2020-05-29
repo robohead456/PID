@@ -1,10 +1,9 @@
 /**
  * @file PID.cpp
  * @author Dan Oates (WPI Class of 2020)
+ * @author Michael Sidler (WPI Class of 2020)
  */
 #include "PID.h"
-#include <CppUtil.h>
-using CppUtil::clamp;
 
 /**
  * @brief Constructor for PID controller
@@ -151,4 +150,9 @@ void PID::reset()
 	u_d = 0.0f;
 	error_prev = 0.0f;
 	first_frame = true;
+}
+
+float PID::clamp(float x, float x_min, float x_max)
+{
+	return (x < x_min) ? x_min : (x > x_max) ? x_max : x;
 }

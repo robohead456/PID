@@ -1,6 +1,7 @@
 # PID
 Class for discrete-time PID controllers  
 Written by Dan Oates (WPI Class of 2020)
+Modified by Michael Sidler (WPI Class of 2020)
 
 ### Description
 This class implements PID control with the following features:
@@ -12,6 +13,3 @@ This class implements PID control with the following features:
 - Reset method: Resets differentiator and zeros integrator
 
 All calculations are done in 32-bit floating-point.
-
-### Dependencies
-- [CppUtil](https://github.com/doates625/CppUtil.git)

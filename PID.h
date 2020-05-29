@@ -2,6 +2,7 @@
  * @file PID.h
  * @brief Class for implementing discrete-time PID controllers
  * @author Dan Oates (WPI Class of 2020)
+ * @author Michael Sidler (WPI Class of 2020)
  */
 #pragma once
 
@@ -20,6 +21,7 @@ public:
 	float update(float error, float ff = 0.0f, bool sat = false);
 	void reset();
 private:
+	float clamp(float x, float x_min, float x_max);
 	float k_p, k_i, k_d, u_min, u_max, f_ctrl, t_ctrl;
 	float u, u_p, u_i, u_d;
 	float error_prev;

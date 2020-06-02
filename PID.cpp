@@ -3,6 +3,7 @@
  * @author Dan Oates (WPI Class of 2020)
  * @author Michael Sidler (WPI Class of 2020)
  */
+
 #include "PID.h"
 
 /**
@@ -14,8 +15,7 @@
  * @param u_max Maximum response
  * @param f_ctrl Control frequency
  */
-PID::PID(float k_p, float k_i, float k_d, float u_min, float u_max, float f_ctrl)
-{
+PID::PID(float k_p, float k_i, float k_d, float u_min, float u_max, float f_ctrl) {
 	this->f_ctrl = f_ctrl;
 	this->t_ctrl = 1.0f / f_ctrl;
 	set_gains(k_p, k_i, k_d);
@@ -28,8 +28,7 @@ PID::PID(float k_p, float k_i, float k_d, float u_min, float u_max, float f_ctrl
  * 
  * Note: For array instantiation only
  */
-PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
-{
+PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f) {
 	return;
 }
 
@@ -39,8 +38,7 @@ PID::PID() : PID(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f)
  * @param k_i Integral gain
  * @param k_d Derivative gain
  */
-void PID::set_gains(float k_p, float k_i, float k_d)
-{
+void PID::set_gains(float k_p, float k_i, float k_d) {
 	set_k_p(k_p);
 	set_k_i(k_i);
 	set_k_d(k_d);
@@ -50,36 +48,44 @@ void PID::set_gains(float k_p, float k_i, float k_d)
  * @brief Updates P-gain
  * @param k_p Proportional gain
  */
-void PID::set_k_p(float k_p)
-{
-	this->k_p = k_p;
-}
+void PID::set_k_p(float k_p) { this->k_p = k_p; }
+
+/**
+ * @brief Returns P-gain
+ * @return k_p Proportional gain
+ */
+float PID::get_k_p(void) { return this->k_p; }
 
 /**
  * @brief Updates I-gain
  * @param k_i Integral gain
  */
-void PID::set_k_i(float k_i)
-{
-	this->k_i = k_i * t_ctrl;
-}
+void PID::set_k_i(float k_i) { this->k_i = k_i * t_ctrl; }
+
+/**
+ * @brief Returns I-gain
+ * @return k_i Integral gain
+ */
+float PID::get_k_i(void) { return this->k_i/t_ctrl; }
 
 /**
  * @brief Updates D-gain
  * @param k_d Derivative gain
  */
-void PID::set_k_d(float k_d)
-{
-	this->k_d = k_d * f_ctrl;
-}
+void PID::set_k_d(float k_d) { this->k_d = k_d * f_ctrl; }
+
+/**
+ * @brief Returns D-gain
+ * @return k_d Derivative gain
+ */
+float PID::get_k_d(void) { return this->k_d/f_ctrl; }
 
 /**
  * @brief Updates response limits
  * @param u_min Minimum response
  * @param u_max Maximum response
  */
-void PID::set_limits(float u_min, float u_max)
-{
+void PID::set_limits(float u_min, float u_max) {
 	set_u_max(u_max);
 	set_u_min(u_min);
 }
@@ -88,8 +94,7 @@ void PID::set_limits(float u_min, float u_max)
  * @brief Updates minimum response
  * @param u_min Minimum response
  */
-void PID::set_u_min(float u_min)
-{
+void PID::set_u_min(float u_min) {
 	this->u_min = u_min;
 }
 
@@ -97,8 +102,7 @@ void PID::set_u_min(float u_min)
  * @brief Updates maximum response
  * @param u_max Maximum response
  */
-void PID::set_u_max(float u_max)
-{
+void PID::set_u_max(float u_max) {
 	this->u_max = u_max;
 }
 
@@ -108,27 +112,23 @@ void PID::set_u_max(float u_max)
  * @param ff Feed-forward term (optional)
  * @param sat = Saturation flag (optional)
  */
-float PID::update(float error, float ff, bool sat)
-{
+float PID::update(float error, float ff, bool sat) {
 	// P-control
 	u_p = k_p * error;
 
 	// I-control
 	bool int_pos = (error > 0.0f && u < u_max);
 	bool int_neg = (error < 0.0f && u > u_min);
-	if ((int_pos || int_neg) && !sat)
-	{
+	if ((int_pos || int_neg) && !sat) {
 		u_i += k_i * error;
 	}
 
 	// D-control
-	if (first_frame)
-	{
+	if (first_frame) {
 		u_d = 0.0f;
 		first_frame = false;
 	}
-	else
-	{
+	else {
 		float error_diff = error - error_prev;
 		u_d = k_d * error_diff;
 	}
@@ -142,8 +142,7 @@ float PID::update(float error, float ff, bool sat)
 /**
  * @brief Resets PID controller (zeros derivative and integral terms)
  */
-void PID::reset()
-{
+void PID::reset() {
 	u = 0.0f;
 	u_p = 0.0f;
 	u_i = 0.0f;
@@ -152,7 +151,6 @@ void PID::reset()
 	first_frame = true;
 }
 
-float PID::clamp(float x, float x_min, float x_max)
-{
+float PID::clamp(float x, float x_min, float x_max) {
 	return (x < x_min) ? x_min : (x > x_max) ? x_max : x;
 }
